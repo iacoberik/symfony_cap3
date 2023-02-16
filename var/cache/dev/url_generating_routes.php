@@ -16,6 +16,7 @@ return [
     '_profiler_router' => [['token'], ['_controller' => 'web_profiler.controller.router::panelAction'], [], [['text', '/router'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     '_profiler_exception' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::body'], [], [['text', '/exception'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::stylesheet'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
+    'app_mix_new' => [[], ['_controller' => 'App\\Controller\\MixController::new'], [], [['text', '/mix/new']], [], [], []],
     'api_songs_get_one' => [['id'], ['_controller' => 'App\\Controller\\SongController::getSong'], ['id' => '\\d+'], [['variable', '/', '\\d+', 'id', true], ['text', '/api/songs']], [], [], []],
     'app_homepage' => [[], ['_controller' => 'App\\Controller\\VinylController::homepage'], [], [['text', '/']], [], [], []],
     'app_browse' => [['slug'], ['slug' => null, '_controller' => 'App\\Controller\\VinylController::browse'], [], [['variable', '/', '[^/]++', 'slug', true], ['text', '/browse']], [], [], []],

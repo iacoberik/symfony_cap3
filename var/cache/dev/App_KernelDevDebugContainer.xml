@@ -301,6 +301,13 @@
         <argument>A self-aware command that can do... only one thing.</argument>
       </call>
     </service>
+    <service id="App\Controller\MixController" class="App\Controller\MixController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.yiVTbOR.App\Controller\MixController"/>
+      </call>
+    </service>
     <service id="App\Controller\SongController" class="App\Controller\SongController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -316,6 +323,10 @@
       <call method="setContainer">
         <argument type="service" id=".service_locator.yiVTbOR.App\Controller\VinylController"/>
       </call>
+    </service>
+    <service id="App\Repository\VinylMixRepository" class="App\Repository\VinylMixRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Service\MixRepository" class="App\Service\MixRepository" autowire="true" autoconfigure="true">
       <argument type="service" id=".debug.githubContentClient"/>
@@ -3299,6 +3310,7 @@
         <argument key="user">root</argument>
         <argument key="password">null</argument>
         <argument key="driverOptions" type="collection"/>
+        <argument key="serverVersion" type="string">8</argument>
         <argument key="defaultTableOptions" type="collection"/>
       </argument>
       <argument type="service" id="doctrine.dbal.default_connection.configuration"/>
@@ -3349,7 +3361,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.Xbsa8iG"/>
+      <argument type="service" id=".service_locator.tgumkHJ"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -3763,12 +3775,17 @@
     <service id="doctrine.migrations.storage.table_storage" class="Doctrine\Migrations\Metadata\Storage\TableMetadataStorageConfiguration"/>
     <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\TalkToMeCommand" class="App\Command\TalkToMeCommand" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Command\TalkToMeCommand" class="App\Command\TalkToMeCommand" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\MixController" class="App\Controller\MixController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\MixController" class="App\Controller\MixController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\MixController" class="App\Controller\MixController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SongController" class="App\Controller\SongController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SongController" class="App\Controller\SongController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\SongController" class="App\Controller\SongController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\VinylController" class="App\Controller\VinylController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\VinylController" class="App\Controller\VinylController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\VinylController" class="App\Controller\VinylController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\VinylMixRepository" class="App\Repository\VinylMixRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\VinylMixRepository" class="App\Repository\VinylMixRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.gSv9zYw" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4097,23 +4114,39 @@
         <argument key="loader" type="service_closure" id=".errored..service_locator.xUrKPVU.Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
+    <service id=".service_locator.aKM6MDa" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+      </argument>
+    </service>
     <service id=".service_locator.B2N.LKQ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="logger" type="service_closure" id="monolog.logger"/>
       </argument>
     </service>
-    <service id=".service_locator.sHU3FSw" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator..SAbLxp" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="mixRepository" type="service_closure" id="App\Repository\VinylMixRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.dXJr5L_" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="App\Controller\MixController::new" type="service_closure" id=".service_locator.aKM6MDa"/>
         <argument key="App\Controller\SongController::getSong" type="service_closure" id=".service_locator.B2N.LKQ"/>
+        <argument key="App\Controller\VinylController::browse" type="service_closure" id=".service_locator..SAbLxp"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="App\Kernel::terminate" type="service_closure" id=".service_locator.bRdave9"/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel::terminate" type="service_closure" id=".service_locator.bRdave9"/>
+        <argument key="App\Controller\MixController:new" type="service_closure" id=".service_locator.aKM6MDa"/>
         <argument key="App\Controller\SongController:getSong" type="service_closure" id=".service_locator.B2N.LKQ"/>
+        <argument key="App\Controller\VinylController:browse" type="service_closure" id=".service_locator..SAbLxp"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel:terminate" type="service_closure" id=".service_locator.bRdave9"/>
@@ -4340,9 +4373,11 @@
         <argument key="turbo.doctrine.event_listener" type="service_closure" id="turbo.doctrine.event_listener"/>
       </argument>
     </service>
-    <service id=".service_locator.Xbsa8iG" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.tgumkHJ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument key="App\Repository\VinylMixRepository" type="service_closure" id="App\Repository\VinylMixRepository"/>
+      </argument>
     </service>
     <service id=".service_locator.KLVvNIq" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -4390,6 +4425,12 @@
         <argument key="router" type="service_closure" id="router.default" on-invalid="ignore"/>
         <argument key="twig" type="service_closure" id="twig" on-invalid="ignore"/>
       </argument>
+    </service>
+    <service id=".service_locator.yiVTbOR.App\Controller\MixController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\MixController"/>
+      <argument>App\Controller\MixController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.yiVTbOR" method="withContext"/>
     </service>
     <service id=".service_locator.yiVTbOR.App\Controller\SongController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\SongController"/>
@@ -4456,6 +4497,10 @@
       <argument type="collection">
         <argument key="reverse_container" type="service_closure" id="reverse_container" on-invalid="ignore_uninitialized"/>
       </argument>
+    </service>
+    <service id=".service_locator.Xbsa8iG" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection"/>
     </service>
     <service id=".service_locator.yKHwqJO" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -4524,12 +4569,12 @@
     <service id="debug.argument_resolver.request.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver"/>
     <service id="debug.argument_resolver.session.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver"/>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.sHU3FSw"/>
+      <argument type="service" id=".service_locator.dXJr5L_"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.sHU3FSw"/>
+      <argument type="service" id=".service_locator.dXJr5L_"/>
     </service>
     <service id=".debug.http_client.inner" class="Symfony\Contracts\HttpClient\HttpClientInterface">
       <argument type="collection"/>
@@ -5288,7 +5333,7 @@
     <service id="doctrine.migrations.metadata_storage" alias="doctrine.migrations.storage.table_storage"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.sHU3FSw"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.dXJr5L_"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>
@@ -5305,7 +5350,7 @@
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id=".service_locator.XDGmiR3" alias=".1_ServiceLocator~XPV2fxU"/>
     <service id=".service_locator.0GV1BZZ" alias=".service_locator.gSv9zYw"/>
-    <service id=".service_locator.1zyuPHy" alias=".service_locator.sHU3FSw"/>
+    <service id=".service_locator.jvAO9z3" alias=".service_locator.dXJr5L_"/>
     <service id=".service_locator.ccTVS1Z" alias=".service_locator.WZdtfd1"/>
     <service id=".service_locator.O24_MAy" alias=".service_locator.yY.p4P7"/>
     <service id=".service_locator.S1lkGFo" alias=".service_locator.yiVTbOR"/>
@@ -5331,7 +5376,9 @@
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
     <service id=".service_locator.FatRZu2" alias=".service_locator.bRdave9"/>
     <service id=".service_locator.uo5c0SP" alias=".service_locator.xUrKPVU"/>
+    <service id=".service_locator.bInR.ll" alias=".service_locator.aKM6MDa"/>
     <service id=".service_locator.6u2lGWO" alias=".service_locator.B2N.LKQ"/>
+    <service id=".service_locator.QW9FgMF" alias=".service_locator..SAbLxp"/>
     <service id=".service_locator.2VYDDd7" alias=".service_locator.yiVTbOR"/>
     <service id=".service_locator.u6DWx23" alias=".service_locator.cXsfP3P"/>
   </services>
