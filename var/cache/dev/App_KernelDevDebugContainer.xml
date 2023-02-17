@@ -293,7 +293,7 @@
     <service id="App\Command\TalkToMeCommand" class="App\Command\TalkToMeCommand" autowire="true" autoconfigure="true">
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
-      <argument type="service" id="App\Service\MixRepository"/>
+      <argument type="service" id="App\Repository\VinylMixRepository"/>
       <call method="setName">
         <argument>app:talk-to-me</argument>
       </call>
@@ -319,7 +319,6 @@
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
       <argument>true</argument>
-      <argument type="service" id="App\Service\MixRepository"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.yiVTbOR.App\Controller\VinylController"/>
       </call>
@@ -327,12 +326,6 @@
     <service id="App\Repository\VinylMixRepository" class="App\Repository\VinylMixRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
-    </service>
-    <service id="App\Service\MixRepository" class="App\Service\MixRepository" autowire="true" autoconfigure="true">
-      <argument type="service" id=".debug.githubContentClient"/>
-      <argument type="service" id="cache.app"/>
-      <argument>true</argument>
-      <argument type="service" id="twig.command.debug"/>
     </service>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">

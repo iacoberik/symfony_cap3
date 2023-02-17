@@ -107,7 +107,10 @@ class __TwigTemplate_6f89c0806794ce9cdf3697f9a32a32cd extends Template
             // line 30
             echo "            <div class=\"col col-md-4\">
                 <div class=\"mixed-vinyl-container p-3 text-center\">
-                    <img src=\"https://via.placeholder.com/300\" alt=\"Square placeholder img\">
+                    <img src=\"";
+            // line 32
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["mix"], "imageUrl", [0 => 300], "method", false, false, false, 32), "html", null, true);
+            echo "\" alt=\"Mix album cover\">
                     <p class=\"mt-2\"><strong>";
             // line 33
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["mix"], "title", [], "any", false, false, false, 33), "html", null, true);
@@ -126,6 +129,11 @@ class __TwigTemplate_6f89c0806794ce9cdf3697f9a32a32cd extends Template
             // line 38
             echo $this->extensions['Knp\Bundle\TimeBundle\Twig\Extension\TimeExtension']->diff(twig_get_attribute($this->env, $this->source, $context["mix"], "createdAt", [], "any", false, false, false, 38));
             echo "</span>
+                    <br>
+                    ";
+            // line 40
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["mix"], "votesString", [], "any", false, false, false, 40), "html", null, true);
+            echo " votes
                 </div>
             </div>
             ";
@@ -133,7 +141,7 @@ class __TwigTemplate_6f89c0806794ce9cdf3697f9a32a32cd extends Template
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['mix'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 42
+        // line 44
         echo "        </div>
     </div>
 </div>
@@ -158,7 +166,7 @@ class __TwigTemplate_6f89c0806794ce9cdf3697f9a32a32cd extends Template
 
     public function getDebugInfo()
     {
-        return array (  137 => 42,  127 => 38,  122 => 36,  117 => 34,  113 => 33,  108 => 30,  104 => 29,  95 => 22,  93 => 20,  88 => 17,  86 => 15,  81 => 12,  79 => 10,  71 => 5,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  145 => 44,  135 => 40,  130 => 38,  125 => 36,  120 => 34,  116 => 33,  112 => 32,  108 => 30,  104 => 29,  95 => 22,  93 => 20,  88 => 17,  86 => 15,  81 => 12,  79 => 10,  71 => 5,  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -194,13 +202,15 @@ class __TwigTemplate_6f89c0806794ce9cdf3697f9a32a32cd extends Template
             {% for mix in mixes %}
             <div class=\"col col-md-4\">
                 <div class=\"mixed-vinyl-container p-3 text-center\">
-                    <img src=\"https://via.placeholder.com/300\" alt=\"Square placeholder img\">
+                    <img src=\"{{ mix.imageUrl(300) }}\" alt=\"Mix album cover\">
                     <p class=\"mt-2\"><strong>{{ mix.title }}</strong></p>
                     <span>{{ mix.trackCount }} Tracks</span>
                     |
                     <span>{{ mix.genre }}</span>
                     |
                     <span>{{ mix.createdAt|ago }}</span>
+                    <br>
+                    {{ mix.votesString }} votes
                 </div>
             </div>
             {% endfor %}
